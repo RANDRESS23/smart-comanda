@@ -1,0 +1,232 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model Estados {
+  id_estado            String      @id @default(uuid())
+  estado               String      @db.VarChar(20) @unique
+
+  estados_meseros      Estados_Meseros[]
+  estados_cajeros      Estados_Cajeros[]
+  estados_mesas        Estados_Mesas[]
+
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+}
+
+model Roles {
+  id_rol            String      @id @default(uuid())
+  rol               String      @db.VarChar(20) @unique
+
+  administradores   Administradores[]
+  meseros           Meseros[]
+  cajeros           Cajeros[]
+
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+}
+
+model Sexos {
+  id_sexo          String      @id @default(uuid())
+  sexo             String      @db.VarChar(20) @unique
+
+  administradores  Administradores[]
+  meseros          Meseros[]
+  cajeros          Cajeros[]
+
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model Tipos_Documento {
+  id_tipo_documento String      @id @default(uuid())
+  tipo_documento    String      @db.VarChar(50) @unique
+
+  administradores   Administradores[]
+  meseros           Meseros[]
+  cajeros           Cajeros[]
+
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+}
+
+model Administradores {
+  id_administrador       String               @id @default(uuid())
+  primer_nombre          String               @db.VarChar(50)
+  segundo_nombre         String?              @db.VarChar(50)
+  primer_apellido        String               @db.VarChar(50)
+  segundo_apellido       String?              @db.VarChar(50)
+  
+  id_tipo_documento      String
+  tipo_documento         Tipos_Documento      @relation(fields: [id_tipo_documento], references: [id_tipo_documento], onDelete: Cascade)
+
+  numero_documento       String               @db.VarChar(20) @unique
+  correo                 String               @db.VarChar(50) @unique
+  clave                  String 
+
+  id_sexo                String
+  sexo                   Sexos                @relation(fields: [id_sexo], references: [id_sexo], onDelete: Cascade)
+
+  celular                String               @db.VarChar(20) @unique
+
+  id_rol                 String
+  rol                    Roles                @relation(fields: [id_rol], references: [id_rol], onDelete: Cascade)
+
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+
+  @@index([id_tipo_documento])
+  @@index([id_sexo])
+  @@index([id_rol])
+}
+
+model Meseros {
+  id_mesero                   String          @id @default(uuid())
+  primer_nombre               String          @db.VarChar(50)
+  segundo_nombre              String?         @db.VarChar(50)
+  primer_apellido             String          @db.VarChar(50)
+  segundo_apellido            String?         @db.VarChar(50)
+  
+  id_tipo_documento           String
+  tipo_documento              Tipos_Documento @relation(fields: [id_tipo_documento], references: [id_tipo_documento], onDelete: Cascade)
+
+  numero_documento            String          @db.VarChar(20) @unique
+  correo                      String          @db.VarChar(50) @unique
+  clave                       String 
+
+  id_sexo                     String
+  sexo                        Sexos           @relation(fields: [id_sexo], references: [id_sexo], onDelete: Cascade)
+
+  celular                     String          @db.VarChar(20) @unique
+
+  id_rol                      String
+  rol                         Roles           @relation(fields: [id_rol], references: [id_rol], onDelete: Cascade)
+
+  estados_meseros             Estados_Meseros[]
+
+  createdAt                   DateTime        @default(now())
+  updatedAt                   DateTime        @updatedAt
+
+  @@index([id_tipo_documento])
+  @@index([id_sexo])
+  @@index([id_rol])
+}
+
+model Estados_Meseros {
+  id_estado_mesero      String     @id @default(uuid())
+  
+  id_mesero             String     @unique
+  mesero                Meseros    @relation(fields: [id_mesero], references: [id_mesero], onDelete: Cascade)
+
+  id_estado             String
+  estado                Estados    @relation(fields: [id_estado], references: [id_estado], onDelete: Cascade)
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([id_mesero])
+  @@index([id_estado])
+}
+
+model Cajeros {
+  id_cajero                   String          @id @default(uuid())
+  primer_nombre               String          @db.VarChar(50)
+  segundo_nombre              String?         @db.VarChar(50)
+  primer_apellido             String          @db.VarChar(50)
+  segundo_apellido            String?         @db.VarChar(50)
+  
+  id_tipo_documento           String
+  tipo_documento              Tipos_Documento @relation(fields: [id_tipo_documento], references: [id_tipo_documento], onDelete: Cascade)
+
+  numero_documento            String          @db.VarChar(20) @unique
+  correo                      String          @db.VarChar(50) @unique
+  clave                       String 
+
+  id_sexo                     String
+  sexo                        Sexos           @relation(fields: [id_sexo], references: [id_sexo], onDelete: Cascade)
+
+  celular                     String          @db.VarChar(20) @unique
+
+  id_rol                      String
+  rol                         Roles           @relation(fields: [id_rol], references: [id_rol], onDelete: Cascade)
+
+  estados_cajeros             Estados_Cajeros[]
+
+  createdAt                   DateTime        @default(now())
+  updatedAt                   DateTime        @updatedAt
+
+  @@index([id_tipo_documento])
+  @@index([id_sexo])
+  @@index([id_rol])
+}
+
+model Estados_Cajeros {
+  id_estado_cajero      String     @id @default(uuid())
+  
+  id_cajero             String     @unique
+  cajero                Cajeros    @relation(fields: [id_cajero], references: [id_cajero], onDelete: Cascade)
+
+  id_estado             String
+  estado                Estados    @relation(fields: [id_estado], references: [id_estado], onDelete: Cascade)
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([id_cajero])
+  @@index([id_estado])
+}
+
+model Mesas {
+  id_mesa         String     @id @default(uuid())
+  numero_mesa     Int
+
+  estados_mesas   Estados_Mesas[]
+
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model Estados_Mesas {
+  id_estado_mesa        String     @id @default(uuid())
+  
+  id_mesa               String     @unique
+  mesa                  Mesas      @relation(fields: [id_mesa], references: [id_mesa], onDelete: Cascade)
+
+  id_estado             String
+  estado                Estados    @relation(fields: [id_estado], references: [id_estado], onDelete: Cascade)
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([id_mesa])
+  @@index([id_estado])
+}
+
+model Categoria_Menus {
+  id_categoria_menu     String     @id @default(uuid())
+  categoria             String     @db.VarChar(100)
+
+  menus                 Menus[]
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+}
+
+model Menus {
+  id_menu               String            @id @default(uuid())
+  producto              String            @db.VarChar(100)
+  precio                Float 
+
+  id_categoria_menu     String
+  categoria_menus       Categoria_Menus   @relation(fields: [id_categoria_menu], references: [id_categoria_menu], onDelete: Cascade)
+
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@index([id_categoria_menu])
+}
