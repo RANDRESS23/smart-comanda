@@ -1,14 +1,19 @@
-// import { Footer } from '@/components/Footer'
-// import { BecauseSection } from '@/components/Home/BecauseSection'
-// import { HomeSection } from '@/components/Home/HomeSection'
+import { type Metadata } from 'next'
+import { FormSignIn } from './_components/FormSignIn'
+import { createClient } from '@/utils/supabase/server'
+import { redirect } from 'next/navigation'
 import { getAdminEmails } from '@/services/getAdminEmails'
 import { getMeserosEmails } from '@/services/getMeserosEmails'
 import { getCajerosEmails } from '@/services/getCajerosEmails'
-import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
 
-/* ➡ Este componente es el que se renderiza en la pagina principal del aplicativo */
-export default async function Home () {
+export async function generateMetadata (): Promise<Metadata> {
+  return {
+    title: 'SmartComanda | Iniciar Sesión'
+  }
+}
+
+/* ➡ Este componente es el que se renderiza en la pagina "Iniciar Sesión" del aplicativo */
+export default async function SignInPage () {
   const supabase = createClient()
   const { data } = await supabase.auth.getUser()
 
@@ -27,12 +32,8 @@ export default async function Home () {
   }
 
   return (
-    <>
-      <main className='w-4/5 mx-auto'>
-        {/* <HomeSection /> */}
-        {/* <BecauseSection /> */}
-      </main>
-      {/* <Footer /> */}
-    </>
+    <div className='container py-20 mx-auto'>
+      <FormSignIn />
+    </div>
   )
 }
