@@ -1,8 +1,8 @@
-import { encryptPassword } from '@/libs/bcrypt'
+// import { encryptPassword } from '@/libs/bcrypt'
 import { db } from '@/libs/prismaDB'
-import { administradoresSchema } from './schema'
+// import { administradoresSchema } from './schema'
 import { NextResponse } from 'next/server'
-import { validateAccessAPI } from '@/libs/validateAccessAPI'
+// import { validateAccessAPI } from '@/libs/validateAccessAPI'
 
 export async function GET () {
   try {
