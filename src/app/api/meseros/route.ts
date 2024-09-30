@@ -309,7 +309,7 @@ export async function PUT (request: Request) {
 
     if (currentMesero?.numero_documento !== numeroDocumento) {
       const existingMeseroDocumento = await db.meseros.findUnique({
-        where: { id_mesero: idMesero },
+        where: { id_mesero: idMesero, numero_documento: numeroDocumento },
         select: { numero_documento: true }
       })
 

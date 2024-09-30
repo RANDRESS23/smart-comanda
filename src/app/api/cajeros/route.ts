@@ -309,7 +309,7 @@ export async function PUT (request: Request) {
 
     if (currentCajero?.numero_documento !== numeroDocumento) {
       const existingCajeroDocumento = await db.cajeros.findUnique({
-        where: { id_cajero: idCajero },
+        where: { id_cajero: idCajero, numero_documento: numeroDocumento },
         select: { numero_documento: true }
       })
 
