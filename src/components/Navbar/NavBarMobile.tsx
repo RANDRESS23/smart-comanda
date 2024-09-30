@@ -61,7 +61,7 @@ export const NavBarMobile = (
     <>
       {
         items.map((item, index) => (
-          <NavbarMenuItem isActive={pathname === item.href} key={`${item.title}-${index}`} className='w-full flex flex-col'>
+          <NavbarMenuItem isActive={pathname === item.href} key={`${item.label}-${index}`} className='w-full flex flex-col'>
             <Link
               className="w-full flex py-1"
               href={item.href}
@@ -71,15 +71,15 @@ export const NavBarMobile = (
                 (pathname.includes('/profile/admin') || pathname.includes('/profile/employee'))
                   ? (
                       <>
-                        {item.icon(pathname)}
+                        {item.icon}
                         <span
                           className='ml-3'
                         >
-                          {item.title}
+                          {item.label}
                         </span>
                       </>
                     )
-                  : item.title
+                  : item.label
               }
             </Link>
             <Divider className='mt-2' />
