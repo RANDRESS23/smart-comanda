@@ -68,7 +68,7 @@ export const NavBarMobile = (
               onClick={() => { setIsMenuOpen(false) }}
             >
               {
-                (pathname.includes('/profile/admin') || pathname.includes('/profile/employee'))
+                (pathname.includes('/profile/admin') || pathname.includes('/profile/mesero') || pathname.includes('/profile/cajero'))
                   ? (
                       <>
                         {item.icon}

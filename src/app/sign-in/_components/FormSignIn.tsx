@@ -118,23 +118,23 @@ export const FormSignIn = () => {
   return (
     <div className='relative bg-grid-black dark:bg-grid-white py-10 font-inter-sans flex flex-col justify-center items-center'>
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-color-background-dark bg-color-background-light [mask-image:radial-gradient(ellipse_at_center,transparent_0.5%,black)]" />
-      <form onSubmit={handleSubmit(onSubmit)} className='lg:max-w-[590px] mx-auto w-11/12 flex flex-col gap-5 bg-color-background-2-light dark:bg-color-background-2-dark p-10 border border-gray-400 dark:border-gray-600 my-10 rounded z-10'>
+      <form onSubmit={handleSubmit(onSubmit)} className='lg:max-w-[590px] mx-auto w-11/12 flex flex-col gap-5 bg-color-background-2-light dark:bg-color-background-2-dark px-5 py-10 md:px-10 border border-gray-400 dark:border-gray-600 my-10 rounded z-10'>
 
-      <div className='w-full mb-2 flex justify-center items-center gap-4'>
+      <div className='w-full mb-2 flex flex-col md:flex-row justify-center items-center gap-2 md:gap-4'>
         <span className='bg-clip-text text-transparent bg-gradient-to-b dark:from-white dark:to-neutral-400 from-black/80 to-black text-center font-extrabold text-3xl'>Iniciar Sesión en</span>
         <Image
           src={logoSmartComandaLight}
           alt='logo SmartComanda'
           width={130}
           height={130}
-          className='flex dark:hidden w-14'
+          className='flex dark:hidden w-20 md:w-14'
         />
         <Image
           src={logoSmartComandaDark}
           alt='logo SmartComanda'
           width={130}
           height={130}
-          className='hidden dark:flex w-14'
+          className='hidden dark:flex w-20 md:w-14'
         />
       </div>
 
