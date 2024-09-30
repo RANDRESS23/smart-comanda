@@ -308,12 +308,12 @@ export async function PUT (request: Request) {
     })
 
     if (currentMesero?.numero_documento !== numeroDocumento) {
-      const existingEmpleadoDocumento = await db.meseros.findUnique({
+      const existingMeseroDocumento = await db.meseros.findUnique({
         where: { id_mesero: idMesero },
         select: { numero_documento: true }
       })
 
-      if (existingEmpleadoDocumento !== null) {
+      if (existingMeseroDocumento !== null) {
         return NextResponse.json(
           { messsage: '¡El número de documento ya existe en la base de datos!' },
           { status: 400 }

@@ -308,12 +308,12 @@ export async function PUT (request: Request) {
     })
 
     if (currentCajero?.numero_documento !== numeroDocumento) {
-      const existingEmpleadoDocumento = await db.cajeros.findUnique({
+      const existingCajeroDocumento = await db.cajeros.findUnique({
         where: { id_cajero: idCajero },
         select: { numero_documento: true }
       })
 
-      if (existingEmpleadoDocumento !== null) {
+      if (existingCajeroDocumento !== null) {
         return NextResponse.json(
           { messsage: '¡El número de documento ya existe en la base de datos!' },
           { status: 400 }
