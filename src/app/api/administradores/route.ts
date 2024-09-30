@@ -20,128 +20,128 @@ export async function GET () {
   }
 }
 
-export async function POST (request: Request) {
-  try {
-    const body = await request.json()
-    const CREATE_ADMIN_IS_POSIBLE = false
+// export async function POST (request: Request) {
+//   try {
+//     const body = await request.json()
+//     const CREATE_ADMIN_IS_POSIBLE = false
 
-    if (!CREATE_ADMIN_IS_POSIBLE) {
-      return NextResponse.json(
-        { messsage: '¡Por el momento no se pueden registrar más administradores!' },
-        { status: 400 }
-      )
-    }
+//     if (!CREATE_ADMIN_IS_POSIBLE) {
+//       return NextResponse.json(
+//         { messsage: '¡Por el momento no se pueden registrar más administradores!' },
+//         { status: 400 }
+//       )
+//     }
 
-    const isValidateAccessAPI = await validateAccessAPI()
+//     const isValidateAccessAPI = await validateAccessAPI()
 
-    if (!isValidateAccessAPI) {
-      return NextResponse.json(
-        { message: '¡No tienes permisos para acceder a esta información!' },
-        { status: 401 }
-      )
-    }
+//     if (!isValidateAccessAPI) {
+//       return NextResponse.json(
+//         { message: '¡No tienes permisos para acceder a esta información!' },
+//         { status: 401 }
+//       )
+//     }
 
-    const {
-      id_administrador: idAdministrador,
-      primer_nombre: primerNombre,
-      segundo_nombre: segundoNombre,
-      primer_apellido: primerApellido,
-      segundo_apellido: segundoApellido,
-      id_tipo_documento: idTipoDocumento,
-      numero_documento: numeroDocumento,
-      correo,
-      clave,
-      clave_2: clave2,
-      id_sexo: idSexo,
-      celular
-    } = administradoresSchema.parse(body)
+//     const {
+//       id_administrador: idAdministrador,
+//       primer_nombre: primerNombre,
+//       segundo_nombre: segundoNombre,
+//       primer_apellido: primerApellido,
+//       segundo_apellido: segundoApellido,
+//       id_tipo_documento: idTipoDocumento,
+//       numero_documento: numeroDocumento,
+//       correo,
+//       clave,
+//       clave_2: clave2,
+//       id_sexo: idSexo,
+//       celular
+//     } = administradoresSchema.parse(body)
 
-    const existingAdministradorDocumento = await db.administradores.findUnique({
-      where: { numero_documento: numeroDocumento }
-    })
+//     const existingAdministradorDocumento = await db.administradores.findUnique({
+//       where: { numero_documento: numeroDocumento }
+//     })
 
-    if (existingAdministradorDocumento !== null) {
-      return NextResponse.json(
-        { messsage: '¡El número de documento ya existe en nuestra base de datos!' },
-        { status: 400 }
-      )
-    }
+//     if (existingAdministradorDocumento !== null) {
+//       return NextResponse.json(
+//         { messsage: '¡El número de documento ya existe en nuestra base de datos!' },
+//         { status: 400 }
+//       )
+//     }
 
-    const existingAdministradorEmail = await db.administradores.findUnique({
-      where: { correo },
-      select: { correo: true }
-    })
+//     const existingAdministradorEmail = await db.administradores.findUnique({
+//       where: { correo },
+//       select: { correo: true }
+//     })
 
-    if (existingAdministradorEmail !== null) {
-      return NextResponse.json(
-        { messsage: '¡El correo electrónico ya existe en nuestra base de datos!' },
-        { status: 400 }
-      )
-    }
+//     if (existingAdministradorEmail !== null) {
+//       return NextResponse.json(
+//         { messsage: '¡El correo electrónico ya existe en nuestra base de datos!' },
+//         { status: 400 }
+//       )
+//     }
 
-    if (clave !== clave2) {
-      return NextResponse.json(
-        { messsage: '¡Las contraseñas no coinciden!' },
-        { status: 400 }
-      )
-    }
+//     if (clave !== clave2) {
+//       return NextResponse.json(
+//         { messsage: '¡Las contraseñas no coinciden!' },
+//         { status: 400 }
+//       )
+//     }
 
-    const rolAdministrador = await db.roles.findUnique({
-      where: { rol: 'Administrador' },
-      select: { id_rol: true }
-    })
+//     const rolAdministrador = await db.roles.findUnique({
+//       where: { rol: 'Administrador' },
+//       select: { id_rol: true }
+//     })
 
-    const dateAux = new Date()
-    dateAux.setUTCHours(dateAux.getUTCHours() - 5)
-    const currentDate = new Date(dateAux.toString())
+//     const dateAux = new Date()
+//     dateAux.setUTCHours(dateAux.getUTCHours() - 5)
+//     const currentDate = new Date(dateAux.toString())
 
-    const hashedPassword = await encryptPassword(clave)
-    const newAdministrador = await db.administradores.create({
-      data: {
-        id_administrador: idAdministrador,
-        primer_nombre: primerNombre,
-        segundo_nombre: segundoNombre,
-        primer_apellido: primerApellido,
-        segundo_apellido: segundoApellido,
-        id_tipo_documento: idTipoDocumento,
-        numero_documento: numeroDocumento,
-        correo,
-        clave: hashedPassword,
-        id_sexo: idSexo,
-        celular,
-        id_rol: rolAdministrador?.id_rol ?? '',
-        createdAt: currentDate,
-        updatedAt: currentDate
-      }
-    })
+//     const hashedPassword = await encryptPassword(clave)
+//     const newAdministrador = await db.administradores.create({
+//       data: {
+//         id_administrador: idAdministrador,
+//         primer_nombre: primerNombre,
+//         segundo_nombre: segundoNombre,
+//         primer_apellido: primerApellido,
+//         segundo_apellido: segundoApellido,
+//         id_tipo_documento: idTipoDocumento,
+//         numero_documento: numeroDocumento,
+//         correo,
+//         clave: hashedPassword,
+//         id_sexo: idSexo,
+//         celular,
+//         id_rol: rolAdministrador?.id_rol ?? '',
+//         createdAt: currentDate,
+//         updatedAt: currentDate
+//       }
+//     })
 
-    const { clave: _, ...administrador } = newAdministrador
+//     const { clave: _, ...administrador } = newAdministrador
 
-    return NextResponse.json(
-      { administrador, message: '¡Administrador registrado exitosamente!' },
-      { status: 201 }
-    )
-  } catch (error: any) {
-    console.error({ error })
+//     return NextResponse.json(
+//       { administrador, message: '¡Administrador registrado exitosamente!' },
+//       { status: 201 }
+//     )
+//   } catch (error: any) {
+//     console.error({ error })
 
-    if (error?.errors !== null) {
-      const errorsMessages: Record<string, string> = {}
-      const { errors } = error
+//     if (error?.errors !== null) {
+//       const errorsMessages: Record<string, string> = {}
+//       const { errors } = error
 
-      errors.forEach(
-        ({ message, path }: { message: string, path: string[] }) => {
-          if (!Object.values(errorsMessages).includes(message)) {
-            errorsMessages[path.join('')] = message
-          }
-        }
-      )
+//       errors.forEach(
+//         ({ message, path }: { message: string, path: string[] }) => {
+//           if (!Object.values(errorsMessages).includes(message)) {
+//             errorsMessages[path.join('')] = message
+//           }
+//         }
+//       )
 
-      return NextResponse.json(errorsMessages, { status: 500 })
-    }
+//       return NextResponse.json(errorsMessages, { status: 500 })
+//     }
 
-    return NextResponse.json(
-      { message: 'Something went wrong.', error },
-      { status: 500 }
-    )
-  }
-}
+//     return NextResponse.json(
+//       { message: 'Something went wrong.', error },
+//       { status: 500 }
+//     )
+//   }
+// }
