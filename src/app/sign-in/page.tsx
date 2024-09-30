@@ -32,7 +32,7 @@ export default async function SignInPage () {
   }
 
   return (
-    <div className='container py-20 mx-auto'>
+    <div className='container py-8 mx-auto'>
       <FormSignIn />
     </div>
   )

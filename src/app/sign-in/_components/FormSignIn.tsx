@@ -14,8 +14,6 @@ import { useRouter } from 'next/navigation'
 import api from '@/libs/api'
 import { type Mesero } from '@/types/meseros'
 import { type Cajero } from '@/types/cajeros'
-import Link from 'next/link'
-import { TitleAnimated } from '@/components/TitleAnimated'
 import { createClient } from '@/utils/supabase/client'
 import { useEmailsAdmin } from '@/hooks/useEmailsAdmin'
 import { useEmailsMeseros } from '@/hooks/useEmailsMeseros'
@@ -24,6 +22,9 @@ import { useAdministrador } from '@/hooks/useAdministrador'
 import { useMesero } from '@/hooks/useMesero'
 import { useCajero } from '@/hooks/useCajero'
 import { type Administrador } from '@/types/administradores'
+import Image from 'next/image'
+import logoSmartComandaDark from '@/assets/logo-smart-comanda-dark.webp'
+import logoSmartComandaLight from '@/assets/logo-smart-comanda-light.webp'
 
 /* ➡ Este componente es el que se renderiza el formulario principal de la pagina "Iniciar Sesión" del aplicativo */
 export const FormSignIn = () => {
@@ -116,14 +117,26 @@ export const FormSignIn = () => {
 
   return (
     <div className='relative bg-grid-black dark:bg-grid-white py-10 font-inter-sans flex flex-col justify-center items-center'>
-      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_0.5%,black)]" />
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-color-background-dark bg-color-background-light [mask-image:radial-gradient(ellipse_at_center,transparent_0.5%,black)]" />
+      <form onSubmit={handleSubmit(onSubmit)} className='lg:max-w-[590px] mx-auto w-11/12 flex flex-col gap-5 bg-color-background-2-light dark:bg-color-background-2-dark p-10 border border-gray-400 dark:border-gray-600 my-10 rounded z-10'>
 
-      <form onSubmit={handleSubmit(onSubmit)} className='lg:max-w-[590px] mx-auto w-11/12 flex flex-col gap-5'>
-
-        <TitleAnimated
-          text1='Iniciar sesión en'
-          text2='SmartComanda'
+      <div className='w-full mb-2 flex justify-center items-center gap-4'>
+        <span className='bg-clip-text text-transparent bg-gradient-to-b dark:from-white dark:to-neutral-400 from-black/80 to-black text-center font-extrabold text-3xl'>Iniciar Sesión en</span>
+        <Image
+          src={logoSmartComandaLight}
+          alt='logo SmartComanda'
+          width={130}
+          height={130}
+          className='flex dark:hidden w-14'
         />
+        <Image
+          src={logoSmartComandaDark}
+          alt='logo SmartComanda'
+          width={130}
+          height={130}
+          className='hidden dark:flex w-14'
+        />
+      </div>
 
         <Input
           type="email"
@@ -161,12 +174,12 @@ export const FormSignIn = () => {
           errors={errors}
         />
         <div className='flex justify-start items-center mb-4 z-10'>
-          <Link
+          {/* <Link
             href="/forgot-password"
             className='text-sm text-primary hover:opacity-80 cursor-pointer transition-all'
           >
             ¿Has olvidado tu contraseña?
-          </Link>
+          </Link> */}
         </div>
 
         <Button
@@ -174,16 +187,6 @@ export const FormSignIn = () => {
           text={isLoading || isConfirmResponse ? 'Cargando...' : 'Iniciar sesión'}
           disabled={isLoading || isConfirmResponse}
         />
-
-        <div className='flex justify-center items-center gap-2 z-10'>
-          <span className='text-sm'>¿No estás registrado?</span>
-          <Link
-            href="/sign-up"
-            className='text-sm text-primary hover:opacity-80 cursor-pointer transition-all'
-          >
-            Registrarme
-          </Link>
-        </div>
       </form>
     </div>
   )
