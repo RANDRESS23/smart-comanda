@@ -5,7 +5,6 @@ import {
   type FieldValues
 } from 'react-hook-form'
 import { MyInput } from './InputExtend'
-import { usePathname } from 'next/navigation'
 
 interface InputProps {
   type: string
@@ -26,8 +25,6 @@ interface InputProps {
 export const InputControlled = (
   { type, name, label, disabled, isRequired, control, size, variant, endContent, errors, className, classNamesInput }: InputProps
 ) => {
-  const pathname = usePathname()
-
   return (
     <>
       <div className='relative overflow-hidden p-[1px] rounded-xl w-full'>
@@ -59,20 +56,10 @@ export const InputControlled = (
           disabled={disabled}
         />
 
-        {
-          variant !== 'underlined' && (
-            <span
-              className={cn(
-                'absolute inset-[-1000%] bg-[conic-gradient(from_90deg_at_50%_50%,#00aaff_0%,#ff3366_50%,#00aaff_100%)] -z-10',
-                (pathname === '/sign-up' || pathname === '/profile/student/info') ? 'lg:animate-[spin_2s_linear_infinite]' : 'animate-[spin_2s_linear_infinite]'
-              )}
-            />
-          )
-        }
       </div>
       {
         errors[name]?.message !== undefined && (
-          <p className='text-color-secondary -mt-3 text-sm z-10'>{String(errors[name]?.message)}</p>
+          <p className='text-color-pink-primary-accent-light -mt-3 text-sm z-10'>{String(errors[name]?.message)}</p>
         )
       }
     </>

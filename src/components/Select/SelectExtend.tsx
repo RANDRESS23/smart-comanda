@@ -1,10 +1,10 @@
-import { extendVariants, Input } from '@nextui-org/react'
+import { extendVariants, Select } from '@nextui-org/react'
 
-export const MyInput = extendVariants(Input, {
+export const MySelect = extendVariants(Select, {
   variants: {
     color: {
       stone: {
-        inputWrapper: [
+        trigger: [
           'bg-[#fdfdfd]',
           'border',
           'shadow',
@@ -20,6 +20,13 @@ export const MyInput = extendVariants(Input, {
           'dark:data-[hover=true]:bg-[#1f1f20]',
           'dark:focus-within:bg-zinc-900',
           'dark:group-data-[focus=true]:bg-[#151516]'
+        ],
+        value: [
+          'text-zinc-900',
+          'placeholder:text-zinc-600',
+          // dark theme
+          'dark:text-zinc-100',
+          'dark:placeholder:text-zinc-600'
         ]
       }
     },
@@ -31,7 +38,10 @@ export const MyInput = extendVariants(Input, {
         label: [
           'text-zinc-400 dark:text-zinc-500'
         ],
-        input: [
+        selectorIcon: [
+          'text-zinc-400 dark:text-zinc-500'
+        ],
+        value: [
           'text-zinc-400 dark:text-zinc-500'
         ]
       }
