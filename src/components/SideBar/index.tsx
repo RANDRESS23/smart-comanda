@@ -2,17 +2,14 @@
 
 import { useState, type ReactNode } from 'react'
 import { Sidebar, SidebarBody, SidebarLink } from '../ui/sidebar'
-import {
-  IconArrowLeft,
-  IconBrandTabler,
-  IconSettings,
-  IconUserBolt
-} from '@tabler/icons-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { cn } from '@/libs/utils'
 import symbolSmartComanda from '@/assets/symbol-smart-comanda.webp'
+import { useAdministrador } from '@/hooks/useAdministrador'
+import { useMesero } from '@/hooks/useMesero'
+import { useCajero } from '@/hooks/useCajero'
 
 interface SideBarProps {
   children: ReactNode
@@ -26,37 +23,20 @@ interface LinkProps {
 }
 
 export default function SideBar ({ children, items }: SideBarProps) {
-  const links = [
-    {
-      label: 'Dashboard',
-      href: '#',
-      icon: (
-        <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      )
-    },
-    {
-      label: 'Profile',
-      href: '#',
-      icon: (
-        <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      )
-    },
-    {
-      label: 'Settings',
-      href: '#',
-      icon: (
-        <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      )
-    },
-    {
-      label: 'Logout',
-      href: '#',
-      icon: (
-        <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      )
-    }
-  ]
   const [open, setOpen] = useState(false)
+  const { administrador } = useAdministrador()
+  const { mesero } = useMesero()
+  const { cajero } = useCajero()
+  const userActive = administrador.id_administrador !== ''
+    ? administrador
+    : mesero.id_mesero !== ''
+      ? mesero
+      : cajero.id_cajero !== ''
+        ? cajero
+        : null
+
+  const firstName = `${userActive?.primer_nombre[0]?.toUpperCase() ?? ''}${userActive?.primer_nombre?.slice(1) ?? ''}`
+  const lastName = `${userActive?.primer_apellido[0]?.toUpperCase() ?? ''}${userActive?.primer_apellido?.slice(1) ?? ''}`
 
   return (
     <div
@@ -78,11 +58,11 @@ export default function SideBar ({ children, items }: SideBarProps) {
           <div>
             <SidebarLink
               link={{
-                label: 'Manu Arora',
-                href: '#',
+                label: `${firstName} ${lastName}`,
+                href: '/',
                 icon: (
                   <Image
-                    src="https://assets.aceternity.com/manu.png"
+                    src={userActive?.sexo === 'Masculino' ? 'https://res.cloudinary.com/dje4ke8hw/image/upload/v1715980427/svgs/male-icon_hmnyeh.svg' : 'https://res.cloudinary.com/dje4ke8hw/image/upload/v1715980438/svgs/female-icon_zktpzk.svg'}
                     className="h-7 w-7 flex-shrink-0 rounded-full"
                     width={50}
                     height={50}

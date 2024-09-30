@@ -26,10 +26,10 @@ export const PDFGenerator = ({ fileName, contactLabel, contactName, invoiceLabel
       orientationLandscape,
       compress: true,
       logo: {
-        src: 'https://i.postimg.cc/T17Zd8Ps/logo-smart-comanda-light.webp',
+        src: 'https://i.postimg.cc/FzVdDvkP/image-removebg-preview-3-edit.png',
         type: 'PNG',
-        width: 70,
-        height: 18,
+        width: 40,
+        height: 28,
         margin: {
           top: 0,
           left: 0
@@ -47,12 +47,12 @@ export const PDFGenerator = ({ fileName, contactLabel, contactName, invoiceLabel
         }
       },
       business: {
-        name: 'SMART COMANDA',
+        name: 'REPORTE',
         address: 'Cra. 1ª #18, El Espinal, Tolima',
         phone: '(+57) 315 3090045',
-        email: 'team@smartcomanda.online',
-        email_1: 'rquimbaya39@itfip.edu.co',
-        website: 'www.smartcomanda.online'
+        email: 'team@smartcomanda.vercel.app',
+        email_1: 'team2@smartcomanda.vercel.app',
+        website: 'www.smartcomanda.vercel.app'
       },
       contact: {
         label: contactLabel,
