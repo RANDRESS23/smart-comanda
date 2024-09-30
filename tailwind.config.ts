@@ -15,31 +15,41 @@ const config: Config = {
         'inter-sans': ['var(--font-inter)']
       },
       colors: {
-        'color-primary': '#00aaff',
-        'color-secondary': '#ff3366',
-        'color-secondary-b': '#ee2c5c',
+        'color-background-dark': '#1f1f22',
+        'color-header-dark': '#1b1b1d',
+        'color-sidebar-dark': '#242427',
+        'color-background-2-dark': '#29292d',
+        'color-border-pink-dark': '#f23c57',
+        'color-pink-primary-dark': '#f23551',
+        'color-pink-primary-accent-dark': '#e23770',
+        'color-background-light': '#fdfdfd',
+        'color-header-light': '#151515',
+        'color-sidebar-light': '#f5f5f5',
+        'color-background-2-light': '#e8e8e8',
+        'color-border-pink-light': '#e40020',
+        'color-pink-primary-light': '#ea2845',
+        'color-pink-primary-accent-light': '#ea2868',
         'p-dark': '#ffffffb2',
         'p-light': '#00000095',
         'nav-link-dark': '#9ca3af',
         'nav-link-light': '#4b5563'
       },
       backgroundImage: {
-        'gradient-0': 'linear-gradient(180deg,#ffffff,#cccccc)',
-        'gradient-1': 'linear-gradient(90deg,#007cf0,#00dfd8)',
-        'gradient-2': 'linear-gradient(90deg,#7928ca,#ff0080)',
-        'gradient-3': 'linear-gradient(90deg,#ff4d4d,#f9cb28)',
         'grid-white': `url("${svgToDataUri(
-          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#202020"><path d="M0 .5H31.5V32"/></svg>'
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#353535"><path d="M0 .5H31.5V32"/></svg>'
         )}")`,
         'grid-black': `url("${svgToDataUri(
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#e6e6e6"><path d="M0 .5H31.5V32"/></svg>'
         )}")`,
         'grid-small-white': `url("${svgToDataUri(
-          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="#202020"><path d="M0 .5H31.5V32"/></svg>'
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="#353535"><path d="M0 .5H31.5V32"/></svg>'
         )}")`,
         'grid-small-black': `url("${svgToDataUri(
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="#e6e6e6"><path d="M0 .5H31.5V32"/></svg>'
-        )}")`
+        )}")`,
+        'bg-color-pink-primary-gradient-light': 'linear-gradient(90deg, #ea2845 0%, #ea2868 100%)',
+        'bg-color-pink-primary-gradient-dark': 'linear-gradient(90deg, #f23551 0%, #e23770 100%)',
+        'bg-color-hover': 'linear-gradient(90deg, #101010 0%, #151515 100%)'
       },
       keyframes: {
         'animation-title-1': {
@@ -100,14 +110,12 @@ const config: Config = {
       themes: {
         light: {
           colors: {
-            primary: '#00aaff',
-            secondary: '#ff3366'
+            background: '#fdfdfd'
           }
         },
         dark: {
           colors: {
-            primary: '#00aaff',
-            secondary: '#ff3366'
+            background: '#1f1f22'
           }
         }
       }
