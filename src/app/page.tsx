@@ -1,6 +1,3 @@
-// import { Footer } from '@/components/Footer'
-// import { BecauseSection } from '@/components/Home/BecauseSection'
-// import { HomeSection } from '@/components/Home/HomeSection'
 import { getAdminEmails } from '@/services/getAdminEmails'
 import { getMeserosEmails } from '@/services/getMeserosEmails'
 import { getCajerosEmails } from '@/services/getCajerosEmails'
@@ -26,13 +23,7 @@ export default async function Home () {
     else if (isCajero) return redirect('/perfil/cajero/inicio')
   }
 
-  return (
-    <>
-      <main className='w-4/5 mx-auto'>
-        {/* <HomeSection /> */}
-        {/* <BecauseSection /> */}
-      </main>
-      {/* <Footer /> */}
-    </>
-  )
+  redirect('/sign-in')
+
+  return <main />
 }

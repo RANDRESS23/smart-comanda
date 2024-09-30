@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import NextUIProviderContext from '@/providers/NextUIProvider'
+import { NavBar } from '@/components/Navbar'
 import { Toaster } from 'sonner'
 import { ViewTransitions } from 'next-view-transitions'
 
@@ -28,7 +29,7 @@ export default function RootLayout ({
         >
           <NextUIProviderContext>
             <Toaster />
-            {/* <NavBar /> */}
+            <NavBar />
             {children}
           </NextUIProviderContext>
         </body>
