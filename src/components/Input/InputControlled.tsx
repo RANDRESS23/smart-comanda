@@ -36,6 +36,7 @@ export const InputControlled = (
               label={label}
               variant={variant}
               size={size}
+              radius='sm'
               endContent={endContent}
               isDisabled={disabled}
               isRequired={isRequired}
