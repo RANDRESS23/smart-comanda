@@ -35,6 +35,7 @@ export const SparklesCore = (props: ParticlesProps) => {
   const [init, setInit] = useState(false)
   useEffect(() => {
     initParticlesEngine(async (engine: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await loadSlim(engine)
     }).then(() => {
       setInit(true)
