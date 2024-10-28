@@ -74,12 +74,6 @@ export async function POST (request: Request) {
       }
     })
 
-    const comandaMenus = await db.comandas_Menus.findMany({
-      where: {
-        id_comanda: newComanda.id_comanda
-      }
-    })
-
     const estadosMesasDB = await db.estados_Mesas.findMany()
     const estadosMesas = estadosMesasDB.map((estadoMesa) => ({
       id_estado_mesa: estadoMesa.id_estado_mesa,
@@ -91,7 +85,7 @@ export async function POST (request: Request) {
     }))
 
     return NextResponse.json(
-      { newComanda, comandaMenus, estadosMesas, message: 'Comanda saved successfully!' },
+      { estadosMesas, message: 'Comanda saved successfully!' },
       { status: 201 }
     )
   } catch (error: any) {
