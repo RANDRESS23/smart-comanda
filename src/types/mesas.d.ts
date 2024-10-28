@@ -5,3 +5,12 @@ export interface Mesas {
   createdAt: Date
   updatedAt: Date
 }
+
+export interface EstadoMesa {
+  id_estado_mesa: string
+  id_mesa: string
+  id_estado: string
+  estado: string
+  createdAt: Date
+  updatedAt: Date
+}

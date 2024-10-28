@@ -2,6 +2,7 @@
 
 import { FaUserPlus } from 'react-icons/fa'
 import { MdTableBar } from 'react-icons/md'
+import { PiNotePencilFill } from 'react-icons/pi'
 
 /* ➡ Items del NavBar sin loguearse ningún rol */
 export const menuItems = [
@@ -34,6 +35,13 @@ export const menuItemsAdmin = [
 
 /* ➡ Items del NavBar del mesero */
 export const menuItemsMesero = [
+  {
+    label: 'Tomar Pedido',
+    href: '/perfil/mesero/tomar-pedido',
+    icon: (
+      <PiNotePencilFill className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    )
+  }
 ]
 
 /* ➡ Items del NavBar del cajero */

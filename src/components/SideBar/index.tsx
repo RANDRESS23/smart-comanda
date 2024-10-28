@@ -41,7 +41,7 @@ export default function SideBar ({ children, items }: SideBarProps) {
   return (
     <div
       className={cn(
-        'rounded-md flex flex-col md:flex-row w-full flex-1 mx-auto overflow-hidden',
+        'rounded-md md:flex flex-col md:flex-row w-full flex-1 mx-auto overflow-hidden',
         'fixed top-0 left-0 h-full pt-[65px] font-inter-sans'
       )}
     >

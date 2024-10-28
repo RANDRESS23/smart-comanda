@@ -183,9 +183,10 @@ model Estados_Cajeros {
 
 model Mesas {
   id_mesa         String     @id @default(uuid())
-  numero_mesa     Int
+  numero_mesa     Int        @unique
 
   estados_mesas   Estados_Mesas[]
+  comandas        Comandas[]
 
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
@@ -220,13 +221,51 @@ model Categoria_Menus {
 model Menus {
   id_menu               String            @id @default(uuid())
   producto              String            @db.VarChar(100)
+  descripcion           String?           @db.VarChar(200)
   precio                Float 
 
   id_categoria_menu     String
-  categoria_menus       Categoria_Menus   @relation(fields: [id_categoria_menu], references: [id_categoria_menu], onDelete: Cascade)
+  categoria_menu        Categoria_Menus   @relation(fields: [id_categoria_menu], references: [id_categoria_menu], onDelete: Cascade)
 
   createdAt             DateTime          @default(now())
   updatedAt             DateTime          @updatedAt
 
+  comandas_menus        Comandas_Menus[]
+
   @@index([id_categoria_menu])
+}
+
+model Comandas {
+  id_comanda            String            @id @default(uuid())
+  cantidad_productos    Int            
+  cantidad_personas     Int            
+  precio_total          Float 
+
+  id_mesa               String
+  mesa                  Mesas             @relation(fields: [id_mesa], references: [id_mesa], onDelete: Cascade)
+
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  comandas_menus        Comandas_Menus[]
+
+  @@index([id_mesa])
+}
+
+model Comandas_Menus {
+  id_comanda_menu       String            @id @default(uuid())
+  cantidad              Int                     
+  precio_total          Float 
+
+  id_comanda            String
+  comanda               Comandas          @relation(fields: [id_comanda], references: [id_comanda], onDelete: Cascade)
+
+  id_menu               String
+  menu                  Menus             @relation(fields: [id_menu], references: [id_menu], onDelete: Cascade)
+
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@index([id_comanda])
+  @@index([id_menu])
 }

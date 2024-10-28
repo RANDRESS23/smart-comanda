@@ -17,11 +17,13 @@ const MouseEnterContext = createContext<
 export const CardContainer = ({
   children,
   className,
-  containerClassName
+  containerClassName,
+  onClick
 }: {
   children?: React.ReactNode
   className?: string
   containerClassName?: string
+  onClick?: () => void
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isMouseEntered, setIsMouseEntered] = useState(false)
@@ -49,12 +51,13 @@ export const CardContainer = ({
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
         className={cn(
-          'py-20 flex items-center justify-center',
+          'flex items-center justify-center',
           containerClassName
         )}
         style={{
           perspective: '1000px'
         }}
+        onClick={onClick}
       >
         <div
           ref={containerRef}

@@ -13,7 +13,6 @@ import { useMesasTotales } from '@/hooks/useMesas'
 import { Skeleton } from '@nextui-org/react'
 import { useConfetti } from '@/hooks/useConfetti'
 import Realistic from 'react-canvas-confetti/dist/presets/realistic'
-import { ButtonLitUpBorders } from '@/components/Button/ButtonLitUpBoders'
 import { InputControlled } from '@/components/Input/InputControlled'
 
 export const FormDefineTables = () => {
@@ -29,7 +28,7 @@ export const FormDefineTables = () => {
     formState: { errors }
   } = useForm<FieldValues>({
     defaultValues: {
-      total_mesas: mesasTotales.length === 0 ? '' : mesasTotales.length.toString()
+      total_mesas: ''
     },
     resolver: zodResolver(totalMesasSchema)
   })
@@ -49,38 +48,23 @@ export const FormDefineTables = () => {
     try {
       setIsLoading(true)
 
-      if (mesasTotales.length !== 0) {
-        const isPossibleSubmit = mesasTotales.length !== Number(data.total_mesas)
+      const isPossibleSubmit = mesasTotales.length !== Number(data.total_mesas)
 
-        if (!isPossibleSubmit) {
-          return toast.success('¡La cantidad de mesas sigue igual, por lo tanto no se ha realizado ningún cambio!')
-        }
+      if (!isPossibleSubmit) {
+        return toast.success('¡La cantidad de mesas sigue igual, por lo tanto no se ha realizado ningún cambio!')
+      }
 
-        const response = await api.put('/mesas', {
-          total_mesas: data.total_mesas
-        })
+      const response = await api.post('/mesas', {
+        total_mesas: data.total_mesas
+      })
 
-        if (response.status === 201) {
-          const { mesasTotales } = response.data
+      if (response.status === 201) {
+        const { mesasTotales } = response.data
 
-          setMesasTotales(mesasTotales as Mesas[])
+        setMesasTotales(mesasTotales as Mesas[])
 
-          toast.success('¡Cantidad de mesas actualizada exitosamente!')
-          onShoot()
-        }
-      } else {
-        const response = await api.post('/mesas', {
-          total_mesas: data.total_mesas
-        })
-
-        if (response.status === 201) {
-          const { mesasTotales } = response.data
-
-          setMesasTotales(mesasTotales as Mesas[])
-
-          toast.success('¡Cantidad de mesas asignada exitosamente!')
-          onShoot()
-        }
+        toast.success('¡Cantidad de mesas actualizada exitosamente!')
+        onShoot()
       }
     } catch (error: any) {
       if (error.response.data !== undefined) {
@@ -107,7 +91,7 @@ export const FormDefineTables = () => {
         {
           !loadingMesasTotales
             ? (
-                <div className='flex flex-col justify-center items-center gap-5'>
+                <div className='flex flex-col justify-center items-center gap-5 w-full'>
                   <InputControlled
                     type="number"
                     control={control}
@@ -148,7 +132,7 @@ export const FormDefineTables = () => {
 
                   {
                     (mesasTotales.length !== 0 && editAmount) && (
-                      <ButtonLitUpBorders
+                      <Button
                         type="button"
                         text='Cancelar'
                         disabled={isLoading}

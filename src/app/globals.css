@@ -11,12 +11,14 @@
 }
 
 html::-webkit-scrollbar,
-main::-webkit-scrollbar {
+main::-webkit-scrollbar,
+div::-webkit-scrollbar {
   width: 0.6rem;
 }
 
 html::-webkit-scrollbar-thumb,
-main::-webkit-scrollbar-thumb {
+main::-webkit-scrollbar-thumb,
+div::-webkit-scrollbar-thumb {
   background: light-dark(#ea2868, #e23770);
   border-radius: 4rem;
 }

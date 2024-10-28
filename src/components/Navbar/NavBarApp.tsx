@@ -71,7 +71,7 @@ export const NavBarApp = ({ user, isAdmin, isMesero, isCajero }: NavBarAppProps)
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          className="sm:hidden"
+          className="md:hidden"
         />
         <NavbarBrand>
           <Link
