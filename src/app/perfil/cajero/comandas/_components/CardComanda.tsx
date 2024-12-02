@@ -127,14 +127,14 @@ export const CardComanda = ({ comanda, numeroComanda, onShoot, comandas, setComa
           >
             <div className='w-full flex flex-col gap-1'>
               <div className='w-full flex items-center justify-between gap-2'>
-                <span>Hora Comanda</span>
-                <span className='font-orbitron-sans'>
+                <span className='text-left'>Hora Comanda</span>
+                <span className='font-orbitron-sans text-right'>
                   {getHourComanda()}
                 </span>
               </div>
               <div className='w-full flex items-center justify-between gap-2'>
-                <span>Tiempo Transcurrido</span>
-                <span className='font-orbitron-sans'>
+                <span className='text-left'>Tiempo Transcurrido</span>
+                <span className='font-orbitron-sans text-right'>
                   { chronometer }
                 </span>
               </div>
