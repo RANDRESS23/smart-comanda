@@ -14,6 +14,7 @@ model Estados {
   estados_meseros      Estados_Meseros[]
   estados_cajeros      Estados_Cajeros[]
   estados_mesas        Estados_Mesas[]
+  estados_comandas     Estados_Comandas[]
 
   createdAt            DateTime    @default(now())
   updatedAt            DateTime    @updatedAt
@@ -237,8 +238,7 @@ model Menus {
 
 model Comandas {
   id_comanda            String            @id @default(uuid())
-  cantidad_productos    Int            
-  cantidad_personas     Int            
+  cantidad_productos    Int                       
   precio_total          Float 
 
   id_mesa               String
@@ -248,6 +248,7 @@ model Comandas {
   updatedAt             DateTime          @updatedAt
 
   comandas_menus        Comandas_Menus[]
+  estados_comandas      Estados_Comandas[]
 
   @@index([id_mesa])
 }
@@ -268,4 +269,20 @@ model Comandas_Menus {
 
   @@index([id_comanda])
   @@index([id_menu])
+}
+
+model Estados_Comandas {
+  id_estado_comanda     String     @id @default(uuid())
+  
+  id_comanda            String     @unique
+  comanda               Comandas   @relation(fields: [id_comanda], references: [id_comanda], onDelete: Cascade)
+
+  id_estado             String
+  estado                Estados    @relation(fields: [id_estado], references: [id_estado], onDelete: Cascade)
+
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+
+  @@index([id_comanda])
+  @@index([id_estado])
 }
