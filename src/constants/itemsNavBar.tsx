@@ -1,7 +1,7 @@
 'use client'
 
 import { FaUserPlus } from 'react-icons/fa'
-import { MdTableBar } from 'react-icons/md'
+import { MdNoteAlt, MdTableBar } from 'react-icons/md'
 import { PiNotePencilFill } from 'react-icons/pi'
 
 /* ➡ Items del NavBar sin loguearse ningún rol */
@@ -46,4 +46,11 @@ export const menuItemsMesero = [
 
 /* ➡ Items del NavBar del cajero */
 export const menuItemsCajero = [
+  {
+    label: 'Comandas',
+    href: '/perfil/cajero/comandas',
+    icon: (
+      <MdNoteAlt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+    )
+  }
 ]
