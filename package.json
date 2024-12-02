@@ -10,6 +10,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@formkit/tempo": "^0.1.2",
     "@hookform/resolvers": "^3.9.0",
     "@nextui-org/react": "^2.4.8",
     "@prisma/client": "^5.20.0",
