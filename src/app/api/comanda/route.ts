@@ -18,9 +18,8 @@ export async function POST (request: Request) {
 
     const {
       idMesa,
-      cantidadPersonas,
       comanda
-    }: { idMesa: string, cantidadPersonas: number, comanda: MenuComanda[] } = body
+    }: { idMesa: string, comanda: MenuComanda[] } = body
 
     const dateAux = new Date()
     dateAux.setUTCHours(dateAux.getUTCHours() - 5)
@@ -39,7 +38,17 @@ export async function POST (request: Request) {
         cantidad_productos: cantidadProductos,
         precio_total: precioTotal,
         id_mesa: idMesa,
-        cantidad_personas: cantidadPersonas,
+        createdAt: currentDate,
+        updatedAt: currentDate
+      }
+    })
+
+    const estados = await db.estados.findMany()
+
+    await db.estados_Comandas.create({
+      data: {
+        id_comanda: newComanda.id_comanda,
+        id_estado: estados[0].id_estado,
         createdAt: currentDate,
         updatedAt: currentDate
       }
@@ -63,7 +72,6 @@ export async function POST (request: Request) {
         id_mesa: idMesa
       }
     })
-    const estados = await db.estados.findMany()
 
     await db.estados_Mesas.update({
       where: {
