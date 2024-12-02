@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Orbitron } from 'next/font/google'
 import './globals.css'
 import NextUIProviderContext from '@/providers/NextUIProvider'
 import { NavBar } from '@/components/Navbar'
@@ -9,6 +9,11 @@ import { ViewTransitions } from 'next-view-transitions'
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter'
+})
+
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  variable: '--font-orbitron'
 })
 
 export const metadata: Metadata = {
@@ -25,7 +30,7 @@ export default function RootLayout ({
     <ViewTransitions>
       <html lang="es" suppressHydrationWarning>
         <body
-          className={`${inter.variable} font-sans`}
+          className={`${inter.variable} font-sans ${orbitron.variable}`}
         >
           <NextUIProviderContext>
             <Toaster />

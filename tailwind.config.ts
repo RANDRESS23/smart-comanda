@@ -12,7 +12,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'inter-sans': ['var(--font-inter)']
+        'inter-sans': ['var(--font-inter)'],
+        'orbitron-sans': ['var(--font-orbitron)']
       },
       colors: {
         'color-background-dark': '#1f1f22',
