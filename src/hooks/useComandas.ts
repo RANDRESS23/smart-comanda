@@ -15,12 +15,7 @@ export const useComandas = () => {
       const fecha = format(new Date(), 'YYYY-MM-DD')
       const response = await api.get(`/comanda/${fecha}`)
 
-      const idsComandasPrev = comandas.map(({ id_comanda: idComanda }) => idComanda)
-      const idsComandasPost = (response?.data?.comandas as Comanda[]).map(({ id_comanda: idComanda }) => idComanda)
-
-      if (idsComandasPrev.toString() !== idsComandasPost.toString()) {
-        setComandas(response?.data?.comandas as Comanda[])
-      }
+      setComandas(response?.data?.comandas as Comanda[])
     } catch (error) {
       console.log(error)
     } finally {
