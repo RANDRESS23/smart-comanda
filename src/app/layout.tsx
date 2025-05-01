@@ -33,7 +33,7 @@ export default function RootLayout ({
           className={`${inter.variable} font-sans ${orbitron.variable}`}
         >
           <NextUIProviderContext>
-            <Toaster />
+            <Toaster position="top-center" richColors />
             <NavBar />
             {children}
           </NextUIProviderContext>
