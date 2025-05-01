@@ -19,3 +19,16 @@ export interface ComandaMenu {
   createdAt: Date
   updatedAt: Date
 }
+
+export interface ComandaResume {
+  cantidad_productos: number
+  precio_total: number
+  mesa: number
+  menu: ComandaMenuResume[]
+}
+
+export interface ComandaMenuResume {
+  menu: string
+  cantidad: number
+  precio_total: number
+}
