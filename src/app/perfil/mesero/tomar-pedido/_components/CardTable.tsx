@@ -5,6 +5,8 @@ import { useMesasTotales } from '@/hooks/useMesas'
 import { cn } from '@/libs/utils'
 import { useDisclosure } from '@nextui-org/react'
 import { ModalTakeOrder } from './ModalTakeOrder'
+import { FaPencilAlt } from 'react-icons/fa'
+import { useState } from 'react'
 
 interface CardTableProps {
   numeroMesa: number
@@ -15,6 +17,12 @@ interface CardTableProps {
 export const CardTable = ({ numeroMesa, idMesa, setEstadosMesas }: CardTableProps) => {
   const { estadosMesas } = useMesasTotales()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [isEditComanda, setIsEditComanda] = useState(false)
+
+  const handleEditComanda = () => {
+    setIsEditComanda(true)
+    onOpen()
+  }
 
   return (
     <>
@@ -41,20 +49,35 @@ export const CardTable = ({ numeroMesa, idMesa, setEstadosMesas }: CardTableProp
             as="p"
             translateZ="60"
             className={cn('text-center text-sm w-full mt-2 text-white py-2 rounded-xl font-bold',
-              estadosMesas?.find((mesa) => mesa.id_mesa === idMesa)?.estado === 'Inactivo' ? 'bg-bg-color-pink-primary-gradient-light dark:bg-bg-color-pink-primary-gradient-dark' : 'bg-green-400 dark:bg-green-400'
+              estadosMesas?.find((mesa) => mesa.id_mesa === idMesa)?.estado === 'Inactivo' ? 'bg-bg-color-pink-primary-gradient-light dark:bg-bg-color-pink-primary-gradient-dark' : 'bg-green-600 dark:bg-green-600'
             )}
           >
             {
               estadosMesas?.find((mesa) => mesa.id_mesa === idMesa)?.estado === 'Inactivo' ? 'Ocupada' : 'Disponible'
             }
           </CardItem>
+          {
+            estadosMesas?.find((mesa) => mesa.id_mesa === idMesa)?.estado === 'Inactivo' &&
+              (
+                <CardItem
+                  as="p"
+                  translateZ="60"
+                  className="absolute top-2 right-2 bg-background flex justify-center items-center rounded-full border border-neutral-600 dark:border-white w-9 h-9 group hover:bg-color-pink-primary-accent-dark cursor-pointer"
+                  onClick={handleEditComanda}
+                >
+                  <FaPencilAlt className='text-neutral-600 dark:text-white group-hover:text-white' />
+                </CardItem>
+              )
+          }
         </CardBody>
       </CardContainer>
       <ModalTakeOrder
         idMesa={idMesa}
+        numeroMesa={numeroMesa}
         isOpen={isOpen}
         onClose={onClose}
         setEstadosMesas={setEstadosMesas}
+        isEditComanda={isEditComanda}
       />
     </>
   )

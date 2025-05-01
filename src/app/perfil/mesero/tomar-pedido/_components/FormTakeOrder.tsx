@@ -1,62 +1,75 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect } from 'react'
 import api from '@/libs/api'
 import { Button } from '@/components/Button'
-import { toast } from 'sonner'
 import { Accordion, AccordionItem } from '@nextui-org/react'
 import { useMenus } from '@/hooks/useMenus'
 import { type MenuComanda } from '@/types/menus'
-import { type EstadoMesa } from '@/types/mesas'
+import { toast } from 'sonner'
 
 interface FormTakeOrderProps {
   idMesa: string
+  numeroMesa: number
+  isEditComanda: boolean
+  comanda: MenuComanda[]
+  onOpen2: () => void
   onClose: () => void
-  onShoot: () => void
-  setEstadosMesas: (value: any) => void
+  setComandaResume: (value: any) => void
+  setComanda: (value: any) => void
 }
 
-export const FormTakeOrder = ({ idMesa, onClose, onShoot, setEstadosMesas }: FormTakeOrderProps) => {
+const ICONS_PRODUCTS = {
+  PIZZAS: '🍕',
+  HAMBURGUESAS: '🍔',
+  'PERROS CALIENTES': '🌭',
+  BEBIDAS: '🥤',
+  PORCIONES: '🍽️',
+  SALCHIPAPAS: '🍟',
+  'PATACÓN Y MAZORCADAS': '🌽',
+  LASAÑAS: '🍲'
+} as const
+
+export const FormTakeOrder = ({ idMesa, isEditComanda, numeroMesa, comanda, onOpen2, onClose, setComandaResume, setComanda }: FormTakeOrderProps) => {
   const { menus, categoriasMenus, loadingMenus } = useMenus()
-  const [isLoading, setIsLoading] = useState(false)
-  const [comanda, setComanda] = useState<MenuComanda[]>([])
 
-  const onSubmit = async () => {
-    try {
-      setIsLoading(true)
+  useEffect(() => {
+    if (!isEditComanda) return
 
-      const response = await api.post('/comanda', {
-        idMesa,
-        cantidadPersonas: 4,
-        comanda
-      })
+    const getComandaMenu = async () => {
+      const response = await api.get(`/comanda/mesa/${idMesa}`)
 
-      if (response.status === 201) {
-        setEstadosMesas(response.data.estadosMesas as EstadoMesa[])
-        toast.success('¡La comanda fue registrada exitosamente!')
-        onShoot()
-        onClose()
-        return
+      if (response.status === 200) {
+        setComanda(response.data.comandaMenu as MenuComanda[])
       }
-
-      toast.error('¡Ocurrió un error al guardar la comanda!')
-      console.log({ response })
-    } catch (error: any) {
-      if (error.response?.data !== undefined) {
-        const errorsMessages = Object.values(error.response.data as Record<string, string>)
-        let errorsMessagesString = ''
-
-        errorsMessages.forEach((message: any) => {
-          errorsMessagesString += `${message} ${'\n'}`
-        })
-
-        return toast.error(errorsMessagesString)
-      }
-
-      console.error({ error })
-    } finally {
-      setIsLoading(false)
     }
+
+    getComandaMenu()
+  }, [])
+
+  const onSubmit = () => {
+    const menu = comanda.map(comandaMenu => {
+      const menuName = menus.find(menu => menu.id_menu === comandaMenu.id_menu)
+
+      return {
+        menu: menuName?.producto,
+        cantidad: comandaMenu.cantidad,
+        precio_total: comandaMenu.precio
+      }
+    })
+
+    const comandaResume = {
+      cantidad_productos: comanda.reduce((acc, menu) => acc + menu.cantidad, 0),
+      precio_total: comanda.reduce((acc, menu) => acc + menu.precio, 0),
+      mesa: numeroMesa,
+      menu
+    }
+
+    setComandaResume(comandaResume)
+
+    if (comandaResume.cantidad_productos === 0) {
+      toast.error('¡No puedes continuar hasta que selecciones algún producto!')
+    } else onOpen2()
   }
 
   const handleComanda = (idMenu: string, price: number, isAddMenu: boolean) => {
@@ -110,18 +123,18 @@ export const FormTakeOrder = ({ idMesa, onClose, onShoot, setEstadosMesas }: For
 
         <Accordion>
           {
-            categoriasMenus.map(categoriaMenu => (
+            categoriasMenus.map((categoriaMenu, index) => (
               <AccordionItem
-                key={categoriaMenu.id_categoria_menu}
+                key={`${categoriaMenu.id_categoria_menu}_${index}`}
                 aria-label={categoriaMenu.categoria}
-                title={categoriaMenu.categoria}
+                title={`${ICONS_PRODUCTS[categoriaMenu.categoria as keyof typeof ICONS_PRODUCTS] || ''} ${categoriaMenu.categoria}`}
               >
                 {
                   menus.filter(menu => menu.id_categoria_menu === categoriaMenu.id_categoria_menu).map((menu, index) => (
                     <>
                       <div className='flex justify-between items-center pl-5 mb-2' key={`${menu.id_menu}${index}`}>
                         <div className='flex flex-col justify-center w-[65%]'>
-                          <span className='font-semibold'>{menu.producto} ($ {menu.precio})</span>
+                          <span className='font-semibold'>{ICONS_PRODUCTS[categoriaMenu.categoria as keyof typeof ICONS_PRODUCTS] || ''} {menu.producto} ($ {menu.precio})</span>
                           <span className='text-sm'>{menu.descripcion}</span>
                         </div>
                         <div className='flex flex-col justify-center gap-2'>
@@ -144,14 +157,14 @@ export const FormTakeOrder = ({ idMesa, onClose, onShoot, setEstadosMesas }: For
 
         <Button
           type="button"
-          text={isLoading ? 'Cargando...' : 'Tomar Pedido'}
-          disabled={isLoading}
+          text={isEditComanda ? 'Actualizar Pedido' : 'Tomar Pedido'}
+          disabled={false}
           onClick={onSubmit}
         />
         <Button
           type="button"
           text='Cancelar Pedido'
-          disabled={isLoading}
+          disabled={false}
           onClick={onClose}
         />
       </div>

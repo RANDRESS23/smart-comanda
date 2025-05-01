@@ -1,39 +1,34 @@
-import { useConfetti } from '@/hooks/useConfetti'
-import { Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@nextui-org/react'
+import { Modal, ModalBody, ModalContent, ModalHeader } from '@nextui-org/react'
 import Image from 'next/image'
-import Realistic from 'react-canvas-confetti/dist/presets/realistic'
 import logoSmartComandaDark from '@/assets/logo-smart-comanda-dark.webp'
 import logoSmartComandaLight from '@/assets/logo-smart-comanda-light.webp'
-import { FormTakeOrder } from './FormTakeOrder'
-import { ModalResumeOrder } from './ModalResumeOrder'
-import { useState } from 'react'
+import { ResumeOrder } from './ResumeOrder'
+import { type ComandaResume } from '@/types/comandas'
 import { type MenuComanda } from '@/types/menus'
 
-interface ModalTakeOrderProps {
+interface ModalResumeOrderProps {
   idMesa: string
   isOpen: boolean
   isEditComanda: boolean
-  numeroMesa: number
+  comandaResume: ComandaResume | null
+  comanda: MenuComanda[]
+  onClose2: () => void
   onClose: () => void
+  onShoot: () => void
   setEstadosMesas: (value: any) => void
 }
 
-export const ModalTakeOrder = ({ idMesa, isOpen, isEditComanda, numeroMesa, onClose, setEstadosMesas }: ModalTakeOrderProps) => {
-  const { onInitHandler, onShoot } = useConfetti()
-  const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure()
-  const [comandaResume, setComandaResume] = useState(null)
-  const [comanda, setComanda] = useState<MenuComanda[]>([])
-
+export const ModalResumeOrder = ({ idMesa, isOpen, isEditComanda, comandaResume, comanda, onShoot, onClose, onClose2, setEstadosMesas }: ModalResumeOrderProps) => {
   return (
     <>
-      <Modal placement='top' backdrop='blur' size='xl' isOpen={isOpen} onClose={onClose} className='border border-color-background-dark dark:border-color-background-light font-inter-sans'>
+      <Modal placement='top' backdrop='blur' size='xl' isOpen={isOpen} onClose={onClose2} className='border border-color-background-dark dark:border-color-background-light font-inter-sans'>
         <ModalContent>
-          {(onClose) => (
+          {(onClose2) => (
             <>
               <div className='relative dark:bg-color-background-2-dark bg-color-background-2-light'>
                 <ModalHeader className="flex justify-between items-center gap-1">
                   <span className='bg-clip-text text-transparent bg-gradient-to-b dark:from-white dark:to-neutral-400 from-black/80 to-black text-left font-extrabold text-[30px] z-10 pb-7 w-full bg-green-400 pt-5'>
-                    {isEditComanda ? 'Actualizar' : 'Tomar'} <span className='bg-clip-text text-transparent bg-gradient-to-b from-color-pink-primary-dark to-color-pink-primary-accent-dark'>Pedido</span>
+                    Resumen del <span className='bg-clip-text text-transparent bg-gradient-to-b from-color-pink-primary-dark to-color-pink-primary-accent-dark'>Pedido</span>
                   </span>
                   <Image
                     src={logoSmartComandaLight}
@@ -52,15 +47,15 @@ export const ModalTakeOrder = ({ idMesa, isOpen, isEditComanda, numeroMesa, onCl
                 </ModalHeader>
                 <hr className='-mt-2 mb-3 w-[88%] mx-auto border-black dark:border-white z-10' />
                 <ModalBody className='mb-3 max-h-[70vh] overflow-y-auto'>
-                  <FormTakeOrder
+                  <ResumeOrder
                     idMesa={idMesa}
-                    numeroMesa={numeroMesa}
                     isEditComanda={isEditComanda}
-                    comanda={comanda}
-                    onOpen2={onOpen2}
+                    onClose2={onClose2}
                     onClose={onClose}
-                    setComandaResume={setComandaResume}
-                    setComanda={setComanda}
+                    onShoot={onShoot}
+                    setEstadosMesas={setEstadosMesas}
+                    comandaResume={comandaResume}
+                    comanda={comanda}
                   />
                 </ModalBody>
               </div>
@@ -68,18 +63,6 @@ export const ModalTakeOrder = ({ idMesa, isOpen, isEditComanda, numeroMesa, onCl
           )}
         </ModalContent>
       </Modal>
-      <Realistic onInit={onInitHandler} />
-      <ModalResumeOrder
-        idMesa={idMesa}
-        isOpen={isOpen2}
-        isEditComanda={isEditComanda}
-        onClose2={onClose2}
-        onClose={onClose}
-        onShoot={onShoot}
-        comandaResume={comandaResume}
-        comanda={comanda}
-        setEstadosMesas={setEstadosMesas}
-      />
     </>
   )
 }
