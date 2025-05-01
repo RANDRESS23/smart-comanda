@@ -120,3 +120,102 @@ export async function POST (request: Request) {
     )
   }
 }
+
+export async function PUT (request: Request) {
+  try {
+    const body = await request.json()
+
+    const isValidateAccessAPI = await validateAccessAPI()
+
+    if (!isValidateAccessAPI) {
+      return NextResponse.json(
+        { message: '¡No tienes permisos para acceder a esta información!' },
+        { status: 401 }
+      )
+    }
+
+    const {
+      idMesa,
+      comanda
+    }: { idMesa: string, comanda: MenuComanda[] } = body
+
+    const dateAux = new Date()
+    dateAux.setUTCHours(dateAux.getUTCHours() - 5)
+    const currentDate = new Date(dateAux.toString())
+
+    let cantidadProductos = 0
+    let precioTotal = 0
+
+    comanda.forEach(({ cantidad, precio }) => {
+      cantidadProductos += cantidad
+      precioTotal += precio
+    })
+
+    const [comandaDB] = await db.comandas.findMany({
+      where: {
+        id_mesa: idMesa
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      take: 1
+    })
+
+    await db.comandas.update({
+      where: {
+        id_comanda: comandaDB.id_comanda
+      },
+      data: {
+        cantidad_productos: cantidadProductos,
+        precio_total: precioTotal,
+        updatedAt: currentDate
+      }
+    })
+
+    await db.comandas_Menus.deleteMany({
+      where: {
+        id_comanda: comandaDB.id_comanda
+      }
+    })
+
+    comanda.forEach(async ({ id_menu: idMenu, cantidad, precio }) => {
+      await db.comandas_Menus.create({
+        data: {
+          id_comanda: comandaDB.id_comanda,
+          id_menu: idMenu,
+          cantidad,
+          precio_total: precio,
+          createdAt: currentDate,
+          updatedAt: currentDate
+        }
+      })
+    })
+
+    return NextResponse.json(
+      { message: 'Comanda updated successfully!' },
+      { status: 200 }
+    )
+  } catch (error: any) {
+    console.error({ error })
+
+    if (error?.errors !== null) {
+      const errorsMessages: Record<string, string> = {}
+      const { errors } = error
+
+      errors.forEach(
+        ({ message, path }: { message: string, path: string[] }) => {
+          if (!Object.values(errorsMessages).includes(message)) {
+            errorsMessages[path.join('')] = message
+          }
+        }
+      )
+
+      return NextResponse.json(errorsMessages, { status: 500 })
+    }
+
+    return NextResponse.json(
+      { message: 'Something went wrong.', error },
+      { status: 500 }
+    )
+  }
+}
