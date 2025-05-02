@@ -6,7 +6,9 @@ import { cn } from '@/libs/utils'
 import { useDisclosure } from '@nextui-org/react'
 import { ModalTakeOrder } from './ModalTakeOrder'
 import { FaPencilAlt } from 'react-icons/fa'
+import { MdOutlineQrCodeScanner } from 'react-icons/md'
 import { useState } from 'react'
+import { ModalQROrder } from './ModalQROrder'
 
 interface CardTableProps {
   numeroMesa: number
@@ -18,6 +20,7 @@ export const CardTable = ({ numeroMesa, idMesa, setEstadosMesas }: CardTableProp
   const { estadosMesas } = useMesasTotales()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isEditComanda, setIsEditComanda] = useState(false)
+  const { isOpen: isOpen3, onOpen: onOpen3, onClose: onClose3 } = useDisclosure()
 
   const handleEditComanda = () => {
     setIsEditComanda(true)
@@ -69,6 +72,19 @@ export const CardTable = ({ numeroMesa, idMesa, setEstadosMesas }: CardTableProp
                 </CardItem>
               )
           }
+          {
+            estadosMesas?.find((mesa) => mesa.id_mesa === idMesa)?.estado === 'Inactivo' &&
+              (
+                <CardItem
+                  as="p"
+                  translateZ="60"
+                  className="absolute top-2 left-2 bg-background flex justify-center items-center rounded-full border border-neutral-600 dark:border-white w-9 h-9 group hover:bg-color-pink-primary-accent-dark cursor-pointer"
+                  onClick={onOpen3}
+                >
+                  <MdOutlineQrCodeScanner className='text-neutral-600 dark:text-white group-hover:text-white text-xl' />
+                </CardItem>
+              )
+          }
         </CardBody>
       </CardContainer>
       <ModalTakeOrder
@@ -76,8 +92,15 @@ export const CardTable = ({ numeroMesa, idMesa, setEstadosMesas }: CardTableProp
         numeroMesa={numeroMesa}
         isOpen={isOpen}
         onClose={onClose}
+        onOpen3={onOpen3}
         setEstadosMesas={setEstadosMesas}
+        setIsEditComanda={setIsEditComanda}
         isEditComanda={isEditComanda}
+      />
+      <ModalQROrder
+        idMesa={idMesa}
+        isOpen={isOpen3}
+        onClose3={onClose3}
       />
     </>
   )

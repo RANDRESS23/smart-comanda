@@ -14,11 +14,13 @@ interface ModalResumeOrderProps {
   comanda: MenuComanda[]
   onClose2: () => void
   onClose: () => void
+  onOpen3: () => void
   onShoot: () => void
   setEstadosMesas: (value: any) => void
+  setIsEditComanda: (value: any) => void
 }
 
-export const ModalResumeOrder = ({ idMesa, isOpen, isEditComanda, comandaResume, comanda, onShoot, onClose, onClose2, setEstadosMesas }: ModalResumeOrderProps) => {
+export const ModalResumeOrder = ({ idMesa, isOpen, isEditComanda, comandaResume, comanda, onShoot, onClose, onOpen3, onClose2, setEstadosMesas, setIsEditComanda }: ModalResumeOrderProps) => {
   return (
     <>
       <Modal placement='top' backdrop='blur' size='xl' isOpen={isOpen} onClose={onClose2} className='border border-color-background-dark dark:border-color-background-light font-inter-sans'>
@@ -52,8 +54,10 @@ export const ModalResumeOrder = ({ idMesa, isOpen, isEditComanda, comandaResume,
                     isEditComanda={isEditComanda}
                     onClose2={onClose2}
                     onClose={onClose}
+                    onOpen3={onOpen3}
                     onShoot={onShoot}
                     setEstadosMesas={setEstadosMesas}
+                    setIsEditComanda={setIsEditComanda}
                     comandaResume={comandaResume}
                     comanda={comanda}
                   />

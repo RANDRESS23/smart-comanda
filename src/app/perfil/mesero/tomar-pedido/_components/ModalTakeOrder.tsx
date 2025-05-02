@@ -15,10 +15,12 @@ interface ModalTakeOrderProps {
   isEditComanda: boolean
   numeroMesa: number
   onClose: () => void
+  onOpen3: () => void
   setEstadosMesas: (value: any) => void
+  setIsEditComanda: (value: any) => void
 }
 
-export const ModalTakeOrder = ({ idMesa, isOpen, isEditComanda, numeroMesa, onClose, setEstadosMesas }: ModalTakeOrderProps) => {
+export const ModalTakeOrder = ({ idMesa, isOpen, isEditComanda, numeroMesa, onClose, onOpen3, setEstadosMesas, setIsEditComanda }: ModalTakeOrderProps) => {
   const { onInitHandler, onShoot } = useConfetti()
   const { isOpen: isOpen2, onOpen: onOpen2, onClose: onClose2 } = useDisclosure()
   const [comandaResume, setComandaResume] = useState(null)
@@ -75,10 +77,12 @@ export const ModalTakeOrder = ({ idMesa, isOpen, isEditComanda, numeroMesa, onCl
         isEditComanda={isEditComanda}
         onClose2={onClose2}
         onClose={onClose}
+        onOpen3={onOpen3}
         onShoot={onShoot}
         comandaResume={comandaResume}
         comanda={comanda}
         setEstadosMesas={setEstadosMesas}
+        setIsEditComanda={setIsEditComanda}
       />
     </>
   )

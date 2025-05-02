@@ -14,11 +14,13 @@ interface ResumeOrderProps {
   isEditComanda: boolean
   onClose2: () => void
   onClose: () => void
+  onOpen3: () => void
   onShoot: () => void
   setEstadosMesas: (value: any) => void
+  setIsEditComanda: (value: any) => void
 }
 
-export const ResumeOrder = ({ comandaResume, comanda, idMesa, isEditComanda, onClose, onClose2, onShoot, setEstadosMesas }: ResumeOrderProps) => {
+export const ResumeOrder = ({ comandaResume, comanda, idMesa, isEditComanda, onClose, onOpen3, onClose2, onShoot, setEstadosMesas, setIsEditComanda }: ResumeOrderProps) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit = async () => {
@@ -38,6 +40,7 @@ export const ResumeOrder = ({ comandaResume, comanda, idMesa, isEditComanda, onC
           onShoot()
           onClose2()
           onClose()
+          onOpen3()
           return
         }
 
@@ -52,9 +55,11 @@ export const ResumeOrder = ({ comandaResume, comanda, idMesa, isEditComanda, onC
 
         if (response.status === 200) {
           toast.success('¡La comanda fue actualizada exitosamente!')
+          setIsEditComanda(false)
           onShoot()
           onClose2()
           onClose()
+          onOpen3()
           return
         }
 
