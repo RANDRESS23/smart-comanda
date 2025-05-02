@@ -17,6 +17,8 @@ export async function GET (_: Request, { params }: { params: { idMesa: string } 
 
     const comanda = await db.comandas.findMany({
       where: { id_mesa: idMesa },
+      orderBy: { createdAt: 'desc' },
+      take: 1,
       select: { id_comanda: true }
     })
 
@@ -42,7 +44,7 @@ export async function GET (_: Request, { params }: { params: { idMesa: string } 
       precio: menu.precio_total
     }))
 
-    return NextResponse.json({ comandaMenu }, { status: 200 })
+    return NextResponse.json({ comandaMenu, idComanda: comanda[0].id_comanda }, { status: 200 })
   } catch (error) {
     console.error({ error })
 
