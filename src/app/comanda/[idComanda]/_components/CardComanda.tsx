@@ -21,10 +21,12 @@ export const CardComanda = () => {
 
     setNumeroComanda(numeroComandaAux === 0 ? null : numeroComandaAux)
     setComanda(comandaAux)
+  }, [comandas])
 
+  useEffect(() => {
     const interval = setInterval(() => {
       const dateAux = new Date()
-      dateAux.setUTCHours(dateAux.getUTCHours() - 5)
+      // dateAux.setUTCHours(dateAux.getUTCHours() - 5)
       const currentDate = new Date(dateAux.toString())
 
       console.log(currentDate.toString(), new Date(comanda?.createdAt ?? 0).toString())
@@ -38,7 +40,7 @@ export const CardComanda = () => {
     }, 1000)
 
     return () => { clearInterval(interval) }
-  }, [comandas])
+  }, [comanda])
 
   const getHourComanda = () => {
     const dateAux = new Date(comanda?.createdAt ?? 0)
