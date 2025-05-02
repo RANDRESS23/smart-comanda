@@ -26,7 +26,7 @@ export const CardComanda = () => {
       const dateAux = new Date()
       dateAux.setUTCHours(dateAux.getUTCHours() - 5)
       const currentDate = new Date(dateAux.toString())
-      const diff = currentDate.getTime() - new Date(comanda?.createdAt ?? '').getTime()
+      const diff = currentDate.getTime() - new Date(comanda?.createdAt ?? 0).getTime()
       const hours = Math.floor(diff / (1000 * 60 * 60))
       const minutes = Math.floor((diff / (1000 * 60)) % 60)
       const seconds = Math.floor((diff / 1000) % 60)
@@ -38,7 +38,7 @@ export const CardComanda = () => {
   }, [comandas])
 
   const getHourComanda = () => {
-    const dateAux = new Date(comanda?.createdAt ?? '')
+    const dateAux = new Date(comanda?.createdAt ?? 0)
     dateAux.setUTCHours(dateAux.getUTCHours() + 5)
     const hour = new Date(dateAux.toString())
 
@@ -71,6 +71,12 @@ export const CardComanda = () => {
             className="w-full text-[20px] text-center font-bold -mt-1 italic text-color-pink-primary-accent-dark"
           >
             (MESA {comanda.mesa})
+          </CardItem>
+          <CardItem
+            translateZ="50"
+            className="w-full text-[12px] text-center font-bold -mt-1 italic text-color-pink-primary-accent-dark animate-pulse"
+          >
+            Preparando...
           </CardItem>
           <CardItem
             translateZ="50"

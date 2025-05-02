@@ -1,17 +1,17 @@
 import { db } from '@/libs/prismaDB'
-import { validateAccessAPI } from '@/libs/validateAccessAPI'
+// import { validateAccessAPI } from '@/libs/validateAccessAPI'
 import { NextResponse } from 'next/server'
 
 export async function GET (_: Request, { params }: { params: { fecha: string } }) {
   try {
-    const isValidateAccessAPI = await validateAccessAPI()
+    // const isValidateAccessAPI = await validateAccessAPI()
 
-    if (!isValidateAccessAPI) {
-      return NextResponse.json(
-        { message: '¡No tienes permisos para acceder a esta información!' },
-        { status: 401 }
-      )
-    }
+    // if (!isValidateAccessAPI) {
+    //   return NextResponse.json(
+    //     { message: '¡No tienes permisos para acceder a esta información!' },
+    //     { status: 401 }
+    //   )
+    // }
 
     const fecha = new Date(params.fecha)
     const fechaInicioAux = new Date(fecha)
