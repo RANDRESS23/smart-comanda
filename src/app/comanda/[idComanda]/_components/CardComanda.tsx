@@ -24,7 +24,7 @@ export const CardComanda = () => {
 
     const interval = setInterval(() => {
       const dateAux = new Date()
-      // dateAux.setUTCHours(dateAux.getUTCHours() - 5)
+      dateAux.setUTCHours(dateAux.getUTCHours() - 5)
       const currentDate = new Date(dateAux.toString())
       const diff = currentDate.getTime() - new Date(comanda?.createdAt ?? 0).getTime()
       const hours = Math.floor(diff / (1000 * 60 * 60))
@@ -39,7 +39,7 @@ export const CardComanda = () => {
 
   const getHourComanda = () => {
     const dateAux = new Date(comanda?.createdAt ?? 0)
-    // dateAux.setUTCHours(dateAux.getUTCHours() + 5)
+    dateAux.setUTCHours(dateAux.getUTCHours() + 5)
     const hour = new Date(dateAux.toString())
 
     return format(hour, 'h:mm A', 'es')
