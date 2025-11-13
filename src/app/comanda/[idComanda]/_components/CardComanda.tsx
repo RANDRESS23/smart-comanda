@@ -57,7 +57,7 @@ export const CardComanda = () => {
   }
 
   if (!comanda) {
-    return <div className='w-full h-full flex items-center justify-center text-2xl font-bold z-10 py-32'>No se encontró la comanda con el ID {params.idComanda}</div>
+    return <div className='w-full h-full flex items-center justify-center text-2xl font-bold z-10 py-32'>No se encontró la comanda</div>
   }
 
   return (
