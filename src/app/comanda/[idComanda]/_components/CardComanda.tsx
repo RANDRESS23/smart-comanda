@@ -32,7 +32,6 @@ export const CardComanda = () => {
       const dateAux2 = new Date(comanda?.createdAt ?? 0)
       dateAux2.setUTCHours(dateAux2.getUTCHours() + 5)
       const comandaCreatedAt = new Date(dateAux2.toString())
-      console.log(currentDate.toString(), comandaCreatedAt)
 
       const diff = currentDate.getTime() - comandaCreatedAt.getTime()
       const hours = Math.floor(diff / (1000 * 60 * 60))
