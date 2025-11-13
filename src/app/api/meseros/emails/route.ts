@@ -1,6 +1,8 @@
 import { db } from '@/libs/prismaDB'
 import { NextResponse } from 'next/server'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET () {
   try {
     const meseros = await db.meseros.findMany()

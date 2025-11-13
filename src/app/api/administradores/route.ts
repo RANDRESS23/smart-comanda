@@ -4,6 +4,8 @@ import { administradoresSchema } from './schema'
 import { NextResponse } from 'next/server'
 // import { validateAccessAPI } from '@/libs/validateAccessAPI'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET () {
   try {
     const administradores = await db.administradores.findMany()
