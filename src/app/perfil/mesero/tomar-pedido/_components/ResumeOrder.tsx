@@ -27,11 +27,13 @@ export const ResumeOrder = ({ comandaResume, comanda, idMesa, isEditComanda, onC
     try {
       setIsLoading(true)
 
+      const comandaFiltered = comanda.filter(item => item.cantidad > 0)
+
       if (!isEditComanda) {
         const response = await api.post('/comanda', {
           idMesa,
           cantidadPersonas: 4,
-          comanda
+          comanda: comandaFiltered
         })
 
         if (response.status === 201) {
@@ -50,7 +52,7 @@ export const ResumeOrder = ({ comandaResume, comanda, idMesa, isEditComanda, onC
         const response = await api.put('/comanda', {
           idMesa,
           cantidadPersonas: 4,
-          comanda
+          comanda: comandaFiltered
         })
 
         if (response.status === 200) {
@@ -104,7 +106,7 @@ export const ResumeOrder = ({ comandaResume, comanda, idMesa, isEditComanda, onC
       <div
         className="w-full text-[16px] text-center font-bold text-neutral-600 dark:text-white my-6 z-10 relative"
       >
-        <div className='w-full flex flex-col gap-2'>
+        <div className='w-full flex flex-col gap-2 mb-3 border-b-2 border-color-pink-primary-accent-dark pb-3'>
           {
             comandaResume.menu.map((item, index) => (
               <div key={index} className='flex justify-between gap-2'>
@@ -114,7 +116,6 @@ export const ResumeOrder = ({ comandaResume, comanda, idMesa, isEditComanda, onC
             ))
           }
         </div>
-        <hr className='my-3'/>
         <div className='w-full flex flex-col z-10 relative'>
           <div className='flex justify-between gap-2'>
             <span className='text-left'>TOTAL</span>

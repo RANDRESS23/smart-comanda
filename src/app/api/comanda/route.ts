@@ -125,14 +125,14 @@ export async function PUT (request: Request) {
   try {
     const body = await request.json()
 
-    const isValidateAccessAPI = await validateAccessAPI()
+    // const isValidateAccessAPI = await validateAccessAPI()
 
-    if (!isValidateAccessAPI) {
-      return NextResponse.json(
-        { message: '¡No tienes permisos para acceder a esta información!' },
-        { status: 401 }
-      )
-    }
+    // if (!isValidateAccessAPI) {
+    //   return NextResponse.json(
+    //     { message: '¡No tienes permisos para acceder a esta información!' },
+    //     { status: 401 }
+    //   )
+    // }
 
     const {
       idMesa,

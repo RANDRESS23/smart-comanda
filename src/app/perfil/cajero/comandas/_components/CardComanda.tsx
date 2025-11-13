@@ -102,7 +102,7 @@ export const CardComanda = ({ comanda, numeroComanda, onShoot, comandas, setComa
             translateZ="50"
             className="w-full text-[16px] text-center font-bold text-neutral-600 dark:text-white my-6"
           >
-            <div className='w-full flex flex-col gap-2'>
+            <div className='w-full flex flex-col gap-2 mb-3 border-b-2 border-color-pink-primary-accent-dark pb-3'>
               {
                 comanda.menu.map((item, index) => (
                   <div key={item.id_comanda_menu} className='flex justify-between gap-2'>
@@ -112,7 +112,6 @@ export const CardComanda = ({ comanda, numeroComanda, onShoot, comandas, setComa
                 ))
               }
             </div>
-            <hr className='my-3'/>
             <div className='w-full flex flex-col'>
               <div className='flex justify-between gap-2'>
                 <span className='text-left'>TOTAL</span>

@@ -56,7 +56,7 @@ export const FormTakeOrder = ({ idMesa, isEditComanda, numeroMesa, comanda, onOp
         cantidad: comandaMenu.cantidad,
         precio_total: comandaMenu.precio
       }
-    }).filter(menu => menu.cantidad > 0)
+    }).filter(comandaMenu => comandaMenu.cantidad > 0)
 
     const comandaResume = {
       cantidad_productos: comanda.reduce((acc, menu) => acc + menu.cantidad, 0),
