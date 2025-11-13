@@ -11,7 +11,7 @@ export const useEmailsMeseros = () => {
       try {
         setLoadingEmailsMeseros(true)
 
-        const response = await api.get('/meseros/emails')
+        const response = await api.get('/meseros/emails', { fetchOptions: { cache: 'no-store' } })
 
         setEmailsMeseros(response?.data?.emailsMeseros as string[])
       } catch (error) {

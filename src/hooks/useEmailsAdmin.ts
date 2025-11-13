@@ -11,7 +11,7 @@ export const useEmailsAdmin = () => {
       try {
         setLoadingEmailsAdmin(true)
 
-        const response = await api.get('/administradores')
+        const response = await api.get('/administradores', { fetchOptions: { cache: 'no-store' } })
 
         setEmailsAdmin(response?.data?.emailsAdministradores as string[])
       } catch (error) {

@@ -11,7 +11,7 @@ export const useEmailsCajeros = () => {
       try {
         setLoadingEmailsCajeros(true)
 
-        const response = await api.get('/cajeros/emails')
+        const response = await api.get('/cajeros/emails', { fetchOptions: { cache: 'no-store' } })
 
         setEmailsCajeros(response?.data?.emailsCajeros as string[])
       } catch (error) {
