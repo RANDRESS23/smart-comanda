@@ -33,6 +33,22 @@ export async function PUT (request: Request) {
       }
     })
 
+    const comanda = await db.comandas.findUnique({
+      where: {
+        id_comanda: idComanda
+      }
+    })
+
+    await db.estados_Mesas.updateMany({
+      where: {
+        id_mesa: comanda?.id_mesa
+      },
+      data: {
+        id_estado: estados[0].id_estado,
+        updatedAt: currentDate
+      }
+    })
+
     return NextResponse.json({
       message: 'Comanda finalizada con éxito.',
       status: 200
