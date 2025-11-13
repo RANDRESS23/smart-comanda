@@ -2,7 +2,7 @@ import { encryptPassword } from '@/libs/bcrypt'
 import { db } from '@/libs/prismaDB'
 import { administradoresSchema } from './schema'
 import { NextResponse } from 'next/server'
-import { validateAccessAPI } from '@/libs/validateAccessAPI'
+// import { validateAccessAPI } from '@/libs/validateAccessAPI'
 
 export async function GET () {
   try {
@@ -32,14 +32,14 @@ export async function POST (request: Request) {
       )
     }
 
-    const isValidateAccessAPI = await validateAccessAPI()
+    // const isValidateAccessAPI = await validateAccessAPI()
 
-    if (!isValidateAccessAPI) {
-      return NextResponse.json(
-        { message: '¡No tienes permisos para acceder a esta información!' },
-        { status: 401 }
-      )
-    }
+    // if (!isValidateAccessAPI) {
+    //   return NextResponse.json(
+    //     { message: '¡No tienes permisos para acceder a esta información!' },
+    //     { status: 401 }
+    //   )
+    // }
 
     const {
       id_administrador: idAdministrador,

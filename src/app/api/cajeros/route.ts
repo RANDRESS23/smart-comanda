@@ -2,18 +2,18 @@ import { encryptPassword } from '@/libs/bcrypt'
 import { db } from '@/libs/prismaDB'
 import { cajerosDataSchema, cajerosSchema } from './schema'
 import { NextResponse } from 'next/server'
-import { validateAccessAPI } from '@/libs/validateAccessAPI'
+// import { validateAccessAPI } from '@/libs/validateAccessAPI'
 
 export async function GET (request: Request) {
   try {
-    const isValidateAccessAPI = await validateAccessAPI()
+    // const isValidateAccessAPI = await validateAccessAPI()
 
-    if (!isValidateAccessAPI) {
-      return NextResponse.json(
-        { message: '¡No tienes permisos para acceder a esta información!' },
-        { status: 401 }
-      )
-    }
+    // if (!isValidateAccessAPI) {
+    //   return NextResponse.json(
+    //     { message: '¡No tienes permisos para acceder a esta información!' },
+    //     { status: 401 }
+    //   )
+    // }
 
     const searchParams = new URL(request.url).searchParams
     const page = searchParams.get('page')
@@ -98,14 +98,14 @@ export async function POST (request: Request) {
   try {
     const body = await request.json()
 
-    const isValidateAccessAPI = await validateAccessAPI()
+    // const isValidateAccessAPI = await validateAccessAPI()
 
-    if (!isValidateAccessAPI) {
-      return NextResponse.json(
-        { message: '¡No tienes permisos para acceder a esta información!' },
-        { status: 401 }
-      )
-    }
+    // if (!isValidateAccessAPI) {
+    //   return NextResponse.json(
+    //     { message: '¡No tienes permisos para acceder a esta información!' },
+    //     { status: 401 }
+    //   )
+    // }
 
     const {
       id_cajero: idCajero,
@@ -282,14 +282,14 @@ export async function PUT (request: Request) {
   try {
     const body = await request.json()
 
-    const isValidateAccessAPI = await validateAccessAPI()
+    // const isValidateAccessAPI = await validateAccessAPI()
 
-    if (!isValidateAccessAPI) {
-      return NextResponse.json(
-        { message: '¡No tienes permisos para acceder a esta información!' },
-        { status: 401 }
-      )
-    }
+    // if (!isValidateAccessAPI) {
+    //   return NextResponse.json(
+    //     { message: '¡No tienes permisos para acceder a esta información!' },
+    //     { status: 401 }
+    //   )
+    // }
 
     const {
       id_cajero: idCajero,
